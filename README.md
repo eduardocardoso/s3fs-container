@@ -11,12 +11,18 @@ If you don't want to use docker to achieve this, just look at _run.sh_ and steal
 ```
 docker build -t yourname/s3fs-nfs .
 ```
-4. Run an instance of this container:
+4. On Linux machines you need to load the NFS kernel modules. Add the following to he bottom of _/etc/modules_ and reboot:
+```
+nfs
+nfsd
+```
+boot2docker on OSX contains NFS modules already so you can skip this step.
+5. Run an instance of this container:
 ```
 docker run -d --cap-add SYS_ADMIN -e AWS_ID=<AWS-id> -e AWS_KEY=<AWS-key> -e BUCKET=<bucket-name> --name=s3fs yourname/s3fs-nfs
 ```
 _<bucket-name>_ in this case is the name you chose; you don't need the full AWS URI. This command returns an container ID.
-5. Check the logs of the newly launched instance to confirm that the container has started OK:
+6. Check the logs of the newly launched instance to confirm that the container has started OK:
 ```
 docker logs <container-ID>
 ```
