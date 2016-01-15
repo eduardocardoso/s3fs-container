@@ -8,24 +8,28 @@ If you don't want to use docker to achieve this, just look at _run.sh_ and steal
 1. Set up an S3 bucket, and get an AWS ID/KEY pair that has access to it.
 2. Clone this repository and cd into it
 3. Build this container:
-```
-docker build -t yourname/s3fs-nfs .
-```
-4. On Linux machines you need to load the NFS kernel modules. Add the following to he bottom of _/etc/modules_ and reboot:
-```
-nfs
-nfsd
-```
-boot2docker on OSX contains NFS modules already so you can skip this step.
+
+    ```
+    docker build -t yourname/s3fs-nfs .
+    ```
+4. On Linux machines you need to load the NFS kernel modules. Add the following to the bottom of _/etc/modules_ and reboot:
+
+    ```
+    nfs
+    nfsd
+    ```
+    boot2docker on OSX contains NFS modules already so you can skip this step.
 5. Run an instance of this container:
-```
-docker run -d --cap-add SYS_ADMIN -e AWS_ID=<AWS-id> -e AWS_KEY=<AWS-key> -e BUCKET=<bucket-name> --name=s3fs yourname/s3fs-nfs
-```
-_<bucket-name>_ in this case is the name you chose; you don't need the full AWS URI. This command returns an container ID.
+
+    ```
+    docker run -d --cap-add SYS_ADMIN -e AWS_ID=<AWS-id> -e AWS_KEY=<AWS-key> -e BUCKET=<bucket-name> --name=s3fs yourname/s3fs-nfs
+    ```
+    _\<bucket-name\>_ in this case is the name you chose; you don't need the full AWS URI. This command returns an container ID.
 6. Check the logs of the newly launched instance to confirm that the container has started OK:
-```
-docker logs <container-ID>
-```
+
+    ```
+    docker logs <container-ID>
+    ```
 
 ## Troubleshooting
 ### fuse: failed to open /dev/fuse: Operation not permitted
