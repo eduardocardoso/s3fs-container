@@ -10,10 +10,12 @@ If you don't want to use docker to achieve this, just look at _run.sh_ and steal
 
    (alternatively, you can build it yourself: `docker build -t="ecardoso/s3fs-nfs" github.com/eduardocardoso/s3fs-container`)
 3. On Linux machines you need to load the NFS kernel modules. Add the following to the bottom of _/etc/modules_:
-```
-nfs
-nfsd
-```
+
+    ```
+    nfs
+    nfsd
+    ```
+    boot2docker on OSX contains NFS modules already so you can skip this step.
 boot2docker on OSX contains NFS modules already so you can skip this step.
 4. `echo "options lockd nlm_udpport=32768 nlm_tcpport=32768" >/etc/modprobe.d/local.conf` (comments welcome on the equivalent for boot2docker)
 5. Reboot to allow this changes to take effect 
