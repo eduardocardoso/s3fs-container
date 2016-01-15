@@ -15,7 +15,23 @@ docker build -t yourname/s3fs-nfs .
 ```
 docker run -d --cap-add SYS_ADMIN -e AWS_ID=<AWS-id> -e AWS_KEY=<AWS-key> -e BUCKET=<bucket-name> --name=s3fs yourname/s3fs-nfs
 ```
-_<bucket-name>_ in this case is the name you chose; you don't need the full AWS URI.
+_<bucket-name>_ in this case is the name you chose; you don't need the full AWS URI. This command returns an container ID.
+5. Check the logs of the newly launched instance to confirm that the container has started OK:
+```
+docker logs <container-ID>
+```
+
+## Troubleshooting
+### fuse: failed to open /dev/fuse: Operation not permitted
+On systems with AppArmor enabled (on by default in Ubuntu-derived distributions), you might see this error in the container logs. You will need additional flags when you launch the container. Stop your first container, delete it, and try again with:
+```
+docker run --device /dev/fuse --cap-add MKNOD ... (rest the same as above)
+```
+Depending upon your docker and Ubuntu version, even this may not be enough. Try:
+```
+docker run --privileged ...(rest the same as above)
+``` 
+Make sure you understand what --privileged does before you deploy it on a production machine.
 
 ## Example S3 policy
 You should use AWS' IAM feature to set up a user that only has access to the bucket you want this container to share, and get an ID/key pair for that user. Then if the ID/key pair are ever compromised, an attacker only has access to one bucket, not your whole AWS account. Here's the security policy I attach to my bucket user:
