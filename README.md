@@ -1,17 +1,14 @@
 # s3fs-container
-This repository contains the files necessary to build a docker container that mounts an Amazon S3 bucket and exports it as an NFS share for local read/write access. It it based on Debian Wheezy, and includes https://github.com/s3fs-fuse/s3fs-fuse and the Linux kernel NFS server.
+This repository contains the files necessary to build a docker container that mounts an Amazon S3 bucket and exports it as an NFS share for local read/write access. It it based on Debian Wheezy, and includes https://github.com/s3fs-fuse/s3fs-fuse and the Linux kernel NFS server. This is an [automated build](https://hub.docker.com/r/ecardoso/s3fs-nfs/) published to the [Docker Hub Registry](https://hub.docker.com/).
 
 ## Use without docker
 If you don't want to use docker to achieve this, just look at _run.sh_ and steal the ideas. If you just want to mount the bucket on one machine and don't need NFS, just use https://github.com/s3fs-fuse/s3fs-fuse.
 
 ## Usage
 1. Set up an S3 bucket, and get an AWS ID/KEY pair that has access to it.
-2. Clone this repository and cd into it
-3. Build this container:
+2. Download [automated build](https://registry.hub.docker.com/u/ecardoso/s3fs-nfs/) from public [Docker Hub Registry](https://registry.hub.docker.com/): `docker pull ecardoso/s3fs-nfs`
 
-    ```
-    docker build -t yourname/s3fs-nfs .
-    ```
+   (alternatively, you can build it yourself: `docker build -t="ecardoso/s3fs-nfs" github.com/eduardocardoso/s3fs-container`)
 4. On Linux machines you need to load the NFS kernel modules. Add the following to the bottom of _/etc/modules_ and reboot:
 
     ```
