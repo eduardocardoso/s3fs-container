@@ -2,7 +2,7 @@
 AWS_KEY=${AWS_KEY}
 AWS_SECRET=${AWS_SECRET}
 BUCKET=${BUCKET}
-S3FS_OPTS=${S3FS_OPS}
+S3FS_OPTS=${S3FS_OPTS}
 
 /etc/init.d/nfs-kernel-server stop
 
